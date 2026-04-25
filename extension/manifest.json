@@ -1,0 +1,93 @@
+{
+  "manifest_version": 3,
+  "name": "BewlyBewly! Ave Mujica",
+  "version": "1.8.20",
+  "description": "Just make a few small changes to your bilibili homepage.",
+  "homepage_url": "https://github.com/VentusUta/BewlyBewly-AveMujica",
+  "background": {
+    "service_worker": "./dist/background/index.js"
+  },
+  "icons": {
+    "16": "/assets/icon-512.png",
+    "48": "/assets/icon-512.png",
+    "128": "/assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://*.bilibili.com/*",
+    "https://*.hdslb.com/*",
+    "https://*.bilibili.tv/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.bilibili.com/*",
+        "https://search.bilibili.com/*",
+        "https://t.bilibili.com/*",
+        "https://space.bilibili.com/*",
+        "https://message.bilibili.com/*",
+        "https://member.bilibili.com/*",
+        "https://account.bilibili.com/*",
+        "https://www.hdslb.com/*",
+        "https://passport.bilibili.com/*",
+        "https://music.bilibili.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "./dist/contentScripts/style.css"
+      ],
+      "run_at": "document_start",
+      "match_about_blank": true,
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.bilibili.com/*",
+        "https://search.bilibili.com/*",
+        "https://t.bilibili.com/*",
+        "https://space.bilibili.com/*",
+        "https://message.bilibili.com/*",
+        "https://member.bilibili.com/*",
+        "https://account.bilibili.com/*",
+        "https://www.hdslb.com/*",
+        "https://passport.bilibili.com/*",
+        "https://music.bilibili.com/*"
+      ],
+      "js": [
+        "./dist/inject/index.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "assets/rules.json"
+      }
+    ]
+  }
+}
